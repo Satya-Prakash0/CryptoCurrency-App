@@ -10,26 +10,21 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lokal.cryptocurrencyapp.adapter.CurrencyAdapter
 import com.lokal.cryptocurrencyapp.api.CryptoApiService
-import com.lokal.cryptocurrencyapp.api.RetrofitHelper
 import com.lokal.cryptocurrencyapp.databinding.ActivityMainBinding
 import com.lokal.cryptocurrencyapp.model.Currency
-import com.lokal.cryptocurrencyapp.model.CurrencyListResponse
-import com.lokal.cryptocurrencyapp.model.LiveRatesResponse
 import com.lokal.cryptocurrencyapp.model.NetworkModel
 import com.lokal.cryptocurrencyapp.repository.CurrencyRepository
 import com.lokal.cryptocurrencyapp.viewmodel.MainViewModel
-import com.lokal.cryptocurrencyapp.viewmodel.MainViewModelFactory
-import kotlinx.coroutines.GlobalScope
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
@@ -47,11 +42,7 @@ class MainActivity : AppCompatActivity() {
         lastRefreshTimeTextView = binding.lastRefreshTextView
         networkModel= NetworkModel()
 
-        val cryptoApi = RetrofitHelper().getInstance().create(CryptoApiService::class.java)
-        val repository = CurrencyRepository(cryptoApi)
-
-        mainViewModel =
-            ViewModelProvider(this, MainViewModelFactory(repository)).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         mainViewModel.liveRate.observe(this, Observer {
             if (it != null) {

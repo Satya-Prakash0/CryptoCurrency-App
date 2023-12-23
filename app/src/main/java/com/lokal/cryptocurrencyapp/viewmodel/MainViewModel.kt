@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.lokal.cryptocurrencyapp.model.CurrencyListResponse
 import com.lokal.cryptocurrencyapp.model.LiveRatesResponse
 import com.lokal.cryptocurrencyapp.repository.CurrencyRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val repository: CurrencyRepository):ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: CurrencyRepository):ViewModel() {
 
     private val _dataFetchComplete = MutableLiveData<Unit>()
     val dataFetchComplete: LiveData<Unit>

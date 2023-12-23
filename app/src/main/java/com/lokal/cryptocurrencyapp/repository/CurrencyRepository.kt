@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.lokal.cryptocurrencyapp.api.CryptoApiService
 import com.lokal.cryptocurrencyapp.model.CurrencyListResponse
 import com.lokal.cryptocurrencyapp.model.LiveRatesResponse
+import javax.inject.Inject
 
-class CurrencyRepository(private val apiService: CryptoApiService) {
+class CurrencyRepository @Inject constructor(private val apiService: CryptoApiService) {
 
     private val currenciesLiveData = MutableLiveData<CurrencyListResponse>()
     private val liveRateData=MutableLiveData<LiveRatesResponse>()
