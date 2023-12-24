@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lokal.cryptocurrencyapp.R
 import com.lokal.cryptocurrencyapp.model.Currency
+import javax.inject.Inject
 
-class CurrencyAdapter(private var currencyList: List<Currency>) : RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
+class CurrencyAdapter @Inject constructor() : RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
 
+    private var currencyList: List<Currency> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_currency, parent, false)
         return CurrencyViewHolder(view)

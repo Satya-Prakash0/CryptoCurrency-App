@@ -23,24 +23,26 @@ import com.lokal.cryptocurrencyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var requiredDataList: MutableList<Currency>
-    private lateinit var currencyAdapter: CurrencyAdapter
+    @Inject
+    lateinit var currencyAdapter: CurrencyAdapter
     lateinit var  swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var lastRefreshTimeTextView: TextView
     private lateinit var binding: ActivityMainBinding
-    private lateinit var networkModel: NetworkModel
+    @Inject
+    lateinit var networkModel: NetworkModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         lastRefreshTimeTextView = binding.lastRefreshTextView
-        networkModel= NetworkModel()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -104,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = binding.recyclerview
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        currencyAdapter = CurrencyAdapter(emptyList())
         recyclerView.adapter = currencyAdapter
 
         // Set up swipe-to-refresh
